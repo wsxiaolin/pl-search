@@ -18,7 +18,7 @@ async function p(c) {
         SELECT * FROM data
         WHERE name LIKE ?
         ORDER BY RANDOM()
-        LIMIT 5
+        LIMIT 10
       `;
       const searchTerm = `%${keyword}%`;
 
@@ -31,14 +31,12 @@ async function p(c) {
             resolve("没有匹配的作品");
           } else {
             rows.forEach((o) => {
-              answer += `\n - <discussion=${o.id}>${o.name.replace(
+              answer += `<size=24>\n - <discussion=${o.id}>${o.name.replace(
                 /\n/,
                 ""
-              )}</discussion>【来自：${o.type}】`;
+              )}</discussion>【来自：${o.type}】</size>`;
             });
-            if (rows.length == 5) {
-              answer += "\n .....";
-            }
+
             resolve(answer);
           }
         }
@@ -62,7 +60,10 @@ async function main() {
     replyRequired: false,
     readHistory: true,
   });
-  bot.start(6);
+  bot.start(6, true);
 }
 
 main();
+setTimeout(() => {
+  throw new Error("超时");
+}, 15000);
