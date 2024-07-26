@@ -6,7 +6,7 @@ const db = new sqlite3.Database(dbPath);
 
 // 关闭数据库连接
 db.close();
-
+ 
 // 创建新的数据库连接并重新定义表结构
 const dbNew = new sqlite3.Database(dbPath);
 
