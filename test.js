@@ -21,7 +21,7 @@ function queryData(tag, name) {
 }
 
 // 使用示例
-queryData("精选", "核");
+queryData("小说", "柴");
 
 db.close((err) => {
   if (err) {

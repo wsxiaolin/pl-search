@@ -1,6 +1,6 @@
 const { User } = require("physics-lab-web-api");
 const sqlite3 = require("sqlite3").verbose();
-const update = ["精选", "知识库"];
+const update = ["精选", "知识库","小说"];
 
 const pl = new User();
 const db = new sqlite3.Database("discussion.db");

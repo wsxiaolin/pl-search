@@ -4,6 +4,7 @@ const sqlite3 = require("sqlite3").verbose();
 const pl = new User();
 const db = new sqlite3.Database("discussion.db");
 let lastQueryIndex = "669dbd7e9e258e6b2f51b22a";
+const tag = "小说";
 
 function insertData(id, name) {
   // Check if a record with the same id already exists
@@ -16,7 +17,7 @@ function insertData(id, name) {
       // Insert new data
       db.run(
         `INSERT INTO data (id, name, type) VALUES (?, ?, ?)`,
-        [id, name, '精选'],
+        [id, name, tag],
         function (err) {
           if (err) {
             console.error("插入数据出错:", err.message);
@@ -36,7 +37,7 @@ async function main() {
   try {
     while (true) {
       const re = await pl.projects.query("Discussion", {
-        tags: ["精选"],
+        tags: [tag],
         take: -100,
         From: lastQueryIndex,
         skip: j,
@@ -48,12 +49,11 @@ async function main() {
       } else {
         re.Data.$values.forEach((i) => {
           j++;
-          if (!i.Tags.includes("精选")) {
+          if (!i.Tags.includes(tag)) {
             console.log(i.Tags);
-            throw new Error("项目标签不包含'精选'");
+            throw new Error("标签可能出错！");
           }
           insertData(i.ID, i.Subject);
-          console.log(lastQueryIndex);
           lastQueryIndex = i.ID;
         });
       }
