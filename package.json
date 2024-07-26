@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "physics-lab-web-api": "^0.2.4",
+    "sqlite3": "^5.1.7"
+  }
+}
