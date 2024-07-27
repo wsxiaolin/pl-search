@@ -27,18 +27,3 @@ jobs:
         USERNAME: ${{ secrets.DB_USERNAME }}
         PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: node workflow.js
-
-      
-    - name: Set up Git
-      run: |
-        git config --global user.name 'wsxiaolin'
-        git config --global user.email 'xiegushi2022@outlook.com'
-        git add .
-        git commit -m "Add backup.json file"
-    
-    - name: Pushing to production branch
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      
