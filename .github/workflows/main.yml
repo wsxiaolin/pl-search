@@ -19,7 +19,9 @@ jobs:
         node-version: '20.15.0'  
 
     - name: Install sqlite3 module
-      run: npm install sqlite3
+      run: | 
+        npm uninstall sqlite3
+        npm install sqlite3
 
     - name: Run script
       env:
