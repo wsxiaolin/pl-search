@@ -6,24 +6,28 @@ const pl = new User();
 const db = new sqlite3.Database("discussion.db");
 
 function insertData(id, name, tag) {
-  db.get(`SELECT id FROM data WHERE id = ?`, [id], (err, row) => {
-    if (err) {
-      console.error("查询数据出错:", err.message);
-    } else if (row) {
-      console.error(`ID ${id} 已存在`);
-    } else {
-      db.run(
-        `INSERT INTO data (id, name, type) VALUES (?, ?, ?)`,
-        [id, name, tag],
-        function (err) {
-          if (err) {
-            console.error("插入数据出错:", err.message);
-          } else {
-            console.log(`插入数据成功：ID ${id}, Name ${name}, Type ${tag}`);
+  return new Promise((resolve, reject) => {
+    db.get(`SELECT id FROM data WHERE id = ?`, [id], (err, row) => {
+      if (err) {
+        reject(new Error("查询数据出错: " + err.message));
+      } else if (row) {
+        console.error(`ID ${id} 已存在`);
+        resolve();
+      } else {
+        db.run(
+          `INSERT INTO data (id, name, type) VALUES (?, ?, ?)`,
+          [id, name, tag],
+          function (err) {
+            if (err) {
+              reject(new Error("插入数据出错: " + err.message));
+            } else {
+              console.log(`插入数据成功：ID ${id}, Name ${name}, Type ${tag}`);
+              resolve();
+            }
           }
-        }
-      );
-    }
+        );
+      }
+    });
   });
 }
 
@@ -37,16 +41,27 @@ async function get(tag) {
     await insertData(i.ID, i.Subject, tag);
   }
 }
-async function main() {
-  await pl.auth.login();
 
-  for (const tag of update) {
-    get(tag).then(async() => {
-      await console.log(tag);
+async function main() {
+  try {
+    await pl.auth.login();
+
+    for (const tag of update) {
+      await get(tag);
+      console.log(tag);
+    }
+  } catch (error) {
+    console.error("发生错误:", error.message);
+  } finally {
+    // 关闭数据库连接
+    db.close((err) => {
+      if (err) {
+        console.error("关闭数据库时出错:", err.message);
+      } else {
+        console.log("数据库已关闭");
+      }
     });
   }
 }
 
-main().then(() => {
-  process.exit(0);
-});
+main().catch(error => console.error("程序异常:", error.message));
