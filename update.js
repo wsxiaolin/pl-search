@@ -42,7 +42,7 @@ async function main() {
 
   for (const tag of update) {
     get(tag).then(() => {
-      console.log(tag);
+      await console.log(tag);
     });
   }
 }
