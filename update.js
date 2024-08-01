@@ -34,7 +34,7 @@ function insertData(id, name, tag) {
 async function get(tag) {
   const re = await pl.projects.query("Discussion", {
     tags: [tag],
-    take: -60,
+    take: -100,
   });
 
   for (const i of re.Data.$values) {
