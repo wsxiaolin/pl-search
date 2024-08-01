@@ -60,8 +60,10 @@ async function main() {
       } else {
         console.log("数据库已关闭");
       }
+      process.exit(0)
     });
   }
 }
 
 main().catch(error => console.error("程序异常:", error.message));
+setInterval(()=>{process.exit(-1)},30*1000)
