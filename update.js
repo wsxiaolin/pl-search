@@ -41,7 +41,7 @@ async function main() {
   await pl.auth.login();
 
   for (const tag of update) {
-    get(tag).then(() => {
+    get(tag).then(async() => {
       await console.log(tag);
     });
   }
