@@ -26,4 +26,4 @@ jobs:
       env:
         USERNAME: ${{ secrets.DB_USERNAME }}
         PASSWORD: ${{ secrets.DB_PASSWORD }}
-      run: node workflow.js
+      run: node update.js
