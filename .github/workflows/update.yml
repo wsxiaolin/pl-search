@@ -1,0 +1,29 @@
+name: 更新作品列表
+
+on:
+  schedule:
+    - cron: '0 0 */3 * *' 
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.15.0'  
+
+    - name: Install sqlite3 module
+      run: | 
+        npm install sqlite3
+
+    - name: Run script
+      env:
+        USERNAME: ${{ secrets.DB_USERNAME }}
+        PASSWORD: ${{ secrets.DB_PASSWORD }}
+      run: node workflow.js
