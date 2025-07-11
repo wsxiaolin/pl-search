@@ -2,7 +2,7 @@ name: 获取来自物实的物实查询请求
 
 on:
   schedule:
-    - cron: '0 0 * * *' 
+    - cron: '0 0-16 * * *' 
   workflow_dispatch:  # 允许手动触发
 
 jobs:
