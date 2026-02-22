@@ -18,7 +18,7 @@ async function p(c) {
         SELECT * FROM data
         WHERE name LIKE ?
         ORDER BY RANDOM()
-        LIMIT 10
+        LIMIT 30
       `;
       const searchTerm = `%${keyword}%`;
 
